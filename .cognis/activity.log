@@ -37,3 +37,4 @@
 2026-01-10T14:30:30  perf: speed. I am speed.
 2026-05-04T09:47:37  fix: the cake is a lie, but the bug was real
 2024-06-03T08:28:08  chore(tests): support stdin as a source
+2024-07-02T15:45:15  ci(rules): add a --format json alias
