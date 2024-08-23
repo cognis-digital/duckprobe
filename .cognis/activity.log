@@ -40,3 +40,4 @@
 2024-07-02T15:45:15  ci(rules): add a --format json alias
 2024-07-13T10:02:22  feat(output): skip binary files by sniffing
 2024-08-12T17:19:29  chore(mcp): wire the MCP tool schema
+2024-08-23T12:36:36  feat: do or do not, there is no try/except
