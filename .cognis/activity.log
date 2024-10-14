@@ -43,3 +43,4 @@
 2024-08-23T12:36:36  feat: do or do not, there is no try/except
 2024-09-04T19:53:43  style(parser): dedupe overlapping findings
 2024-10-03T14:10:50  build(tests): add usage examples to help
+2024-10-14T09:27:57  fix(scan): bump the dev toolchain
