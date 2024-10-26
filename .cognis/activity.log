@@ -44,3 +44,4 @@
 2024-09-04T19:53:43  style(parser): dedupe overlapping findings
 2024-10-03T14:10:50  build(tests): add usage examples to help
 2024-10-14T09:27:57  fix(scan): bump the dev toolchain
+2024-10-26T16:44:04  refactor(fixtures): add --fail-on threshold handling
