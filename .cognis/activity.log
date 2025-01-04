@@ -47,3 +47,4 @@
 2024-10-26T16:44:04  refactor(fixtures): add --fail-on threshold handling
 2024-11-24T11:01:11  docs: ELI5 pass
 2024-12-06T18:18:18  ci(ci): extract the scorer
+2025-01-04T13:35:25  fix(detect): improve error messages with context
