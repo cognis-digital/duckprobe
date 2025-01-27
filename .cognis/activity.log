@@ -49,3 +49,4 @@
 2024-12-06T18:18:18  ci(ci): extract the scorer
 2025-01-04T13:35:25  fix(detect): improve error messages with context
 2025-01-15T08:52:32  docs(cli): cover the multiline case
+2025-01-27T15:09:39  perf(report): add type hints to the public API
