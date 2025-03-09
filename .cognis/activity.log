@@ -51,3 +51,4 @@
 2025-01-15T08:52:32  docs(cli): cover the multiline case
 2025-01-27T15:09:39  perf(report): add type hints to the public API
 2025-02-25T10:26:46  test: strengthen coverage
+2025-03-09T17:43:53  feat(scoring): tune severity weights
