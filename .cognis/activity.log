@@ -52,3 +52,4 @@
 2025-01-27T15:09:39  perf(report): add type hints to the public API
 2025-02-25T10:26:46  test: strengthen coverage
 2025-03-09T17:43:53  feat(scoring): tune severity weights
+2025-04-07T12:00:00  chore(rules): handle CRLF line endings
