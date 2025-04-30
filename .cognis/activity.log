@@ -54,3 +54,4 @@
 2025-03-09T17:43:53  feat(scoring): tune severity weights
 2025-04-07T12:00:00  chore(rules): handle CRLF line endings
 2025-04-18T19:17:07  refactor(output): add a fast path for the common case
+2025-04-30T14:34:14  style(mcp): add a --quiet mode
