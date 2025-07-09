@@ -57,3 +57,4 @@
 2025-04-30T14:34:14  style(mcp): add a --quiet mode
 2025-05-29T09:51:21  fix: the cake is a lie, but the bug was real
 2025-06-10T16:08:28  fix(parser): handle empty and malformed input
+2025-07-09T11:25:35  docs(tests): guard against ReDoS in patterns
