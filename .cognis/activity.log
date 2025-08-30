@@ -60,3 +60,4 @@
 2025-07-09T11:25:35  docs(tests): guard against ReDoS in patterns
 2025-07-20T18:42:42  test(scan): short-circuit on first critical
 2025-08-01T13:59:49  ci(fixtures): improve the demo scenario
+2025-08-30T08:16:56  refactor(docs): trim whitespace in parsed fields
