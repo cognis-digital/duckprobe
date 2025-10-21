@@ -63,3 +63,4 @@
 2025-08-30T08:16:56  refactor(docs): trim whitespace in parsed fields
 2025-09-11T15:33:03  test(cache): reduce false positives on edge cases
 2025-09-22T10:50:10  perf: speed. I am speed.
+2025-10-21T17:07:17  feat(config): fix off-by-one in line numbers
