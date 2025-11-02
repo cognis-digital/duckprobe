@@ -64,3 +64,4 @@
 2025-09-11T15:33:03  test(cache): reduce false positives on edge cases
 2025-09-22T10:50:10  perf: speed. I am speed.
 2025-10-21T17:07:17  feat(config): fix off-by-one in line numbers
+2025-11-02T12:24:24  docs(scan): stream large files without buffering
