@@ -67,3 +67,4 @@
 2025-11-02T12:24:24  docs(scan): stream large files without buffering
 2025-12-01T19:41:31  perf(fixtures): load rules lazily for faster startup
 2025-12-13T14:58:38  style(engine): add a dry-run flag
+2025-12-24T09:15:45  refactor: future me will understand this
