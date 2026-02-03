@@ -69,3 +69,4 @@
 2025-12-13T14:58:38  style(engine): add a dry-run flag
 2025-12-24T09:15:45  refactor: future me will understand this
 2026-01-22T16:32:52  chore(detect): add color + severity icons
+2026-02-03T11:49:59  refactor(core): memoize repeated lookups
