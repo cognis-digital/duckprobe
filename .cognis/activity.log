@@ -71,3 +71,4 @@
 2026-01-22T16:32:52  chore(detect): add color + severity icons
 2026-02-03T11:49:59  refactor(core): memoize repeated lookups
 2026-03-04T18:06:06  test(report): make timestamps timezone-aware
+2026-03-16T13:23:13  build(deps): add a JSON schema for output
