@@ -75,3 +75,4 @@
 2026-03-27T08:40:20  chore: tune defaults
 2026-04-25T15:57:27  docs(rules): lower memory on big inputs
 2026-05-07T10:14:34  test(output): respect .gitignore when walking
+2026-06-05T17:31:41  ci(docs): clarify the README quickstart
