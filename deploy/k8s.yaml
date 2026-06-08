@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: duckprobe, labels: { app: duckprobe } }
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: duckprobe } }
+  template:
+    metadata: { labels: { app: duckprobe } }
+    spec:
+      containers:
+        - name: duckprobe
+          image: ghcr.io/cognis-digital/duckprobe:latest
+          ports: [{ containerPort: 8000 }]
+          resources:
+            requests: { cpu: "50m", memory: "64Mi" }
+            limits: { cpu: "500m", memory: "256Mi" }
+---
+apiVersion: v1
+kind: Service
+metadata: { name: duckprobe }
+spec:
+  selector: { app: duckprobe }
+  ports: [{ port: 80, targetPort: 8000 }]
