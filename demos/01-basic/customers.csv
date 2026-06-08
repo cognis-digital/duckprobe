@@ -1,0 +1,9 @@
+id,email,status,age,signup_date
+1,alice@example.com,active,34,2026-06-01
+2,bob@example.com,trial,29,2026-06-03
+3,carol@example.com,active,41,2026-06-05
+4,dave@example.com,churned,52,2026-05-28
+5,erin@example.com,active,27,2026-06-06
+6,frank@example.com,trial,38,2026-06-02
+7,grace@example.com,active,45,2026-06-04
+8,heidi@example.com,churned,33,2026-05-30

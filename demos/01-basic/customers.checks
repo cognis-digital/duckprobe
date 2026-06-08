@@ -1,0 +1,10 @@
+# DUCKPROBE checks for the customers extract
+row_count between 1 and 10000
+not_null id
+not_null email
+unique id
+no_duplicates email
+min age >= 0
+max age <= 130
+accepted_values status in active, trial, churned
+matches_regex email ^[^@]+@[^@]+\.[^@]+$
