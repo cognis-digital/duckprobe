@@ -36,9 +36,9 @@ DuckDB-era zero-setup DQ, hot
 <a name="features"></a>
 ## Features
 
-- ✅ Todo
-- ✅ Fixme
-- ✅ Xxx
+- ✅ Load Table
+- ✅ Parse Checks
+- ✅ Run Checks
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
