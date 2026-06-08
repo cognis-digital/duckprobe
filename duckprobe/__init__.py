@@ -1,11 +1,2 @@
-"""duckprobe — part of the Cognis Neural Suite."""
-try:  # re-export the tool's public API + identity from core
-    from duckprobe.core import *  # noqa: F401,F403
-except Exception:  # pragma: no cover
-    pass
-try:
-    from duckprobe.core import TOOL_NAME, TOOL_VERSION
-except Exception:  # pragma: no cover
-    TOOL_NAME = "duckprobe"
-    TOOL_VERSION = "0.1.0"
-__version__ = TOOL_VERSION
+"""duckprobe"""
+__version__ = "0.2.0"
