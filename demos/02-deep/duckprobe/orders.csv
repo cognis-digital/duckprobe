@@ -1,1 +1,16 @@
-see written file
+order_id,customer_email,order_date,quantity,unit_price,total,status,region
+50001,amy@shop.com,2026-05-20,2,19.99,39.98,shipped,NA
+50002,ben@shop.com,2026-05-20,1,5.00,5.00,shipped,NA
+50003,cara@shop.org,2026-05-21,3,12.50,37.50,pending,EU
+50004,dan@shop.net,2026-05-21,1,99.00,99.00,shipped,EU
+50005,eve@shop.com,2026-05-22,5,4.20,21.00,delivered,APAC
+50006,,2026-05-22,2,10.00,20.00,shipped,NA
+50007,gil@shop.com,2026-05-23,1,250.00,250.00,delivered,EU
+50008,han@shop.com,2026-05-23,-1,8.00,-8.00,refunded,NA
+50009,ivy@shop.org,2026-05-24,4,7.75,31.00,shipped,APAC
+50010,bad-email,2026-05-24,2,15.00,30.00,shipped,NA
+50011,kim@shop.com,2026-05-25,1,42.00,42.00,frozen,EU
+50012,lee@shop.com,2026-05-25,3,9.99,29.97,delivered,NA
+50001,amy2@shop.com,2026-05-26,1,19.99,19.99,shipped,NA
+50014,ned@shop.net,2026-05-26,2,33.00,66.00,delivered,EU
+50015,opal@shop.com,2026-05-27,6,3.33,19.98,shipped,APAC

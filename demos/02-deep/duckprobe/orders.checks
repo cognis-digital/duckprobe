@@ -1,1 +1,41 @@
-see written file
+# duckprobe suite for the demo orders extract
+# error-severity checks block; [warn] checks only report.
+
+schema order_id, customer_email, status, quantity, total
+row_count between 1 and 100000
+
+# identity
+not_null order_id
+unique order_id
+duplicate_percent order_id < 1
+
+# contact quality
+completeness customer_email >= 95 [warn]
+not_null customer_email
+matches_regex customer_email ^[^@\s]+@[^@\s]+\.[^@\s]+$
+
+# business rules
+accepted_values status in shipped, pending, delivered, refunded
+in_range quantity between 1 and 100
+min total >= 0
+avg unit_price between 1 and 1000 [warn]
+
+# partitioning / filtered checks (SodaCL filter)
+accepted_values region in NA, EU, APAC
+min total >= 0 where region = EU
+avg total < 100 where status = refunded [warn]
+
+# cross-column row expression: line total must equal qty * unit price
+row_expr total == quantity * unit_price
+
+# referential integrity: every order email must be a known customer
+reference customer_email in customers.csv:customer_id
+
+# per-group invariant + percentile + median
+group_by region row_count >= 1
+percentile total p90 between 0 and 100000 [warn]
+median unit_price between 1 and 1000 [warn]
+
+# anomaly / change detection (needs --metric-store to compare across runs)
+anomaly row_count change < 50% [warn]
+anomaly avg total change < 30% [warn]

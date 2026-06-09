@@ -1,0 +1,14 @@
+customer_id,name,region,tier
+amy@shop.com,Amy,NA,gold
+ben@shop.com,Ben,NA,silver
+cara@shop.org,Cara,EU,gold
+dan@shop.net,Dan,EU,bronze
+eve@shop.com,Eve,APAC,gold
+gil@shop.com,Gil,EU,gold
+han@shop.com,Han,NA,bronze
+ivy@shop.org,Ivy,APAC,silver
+kim@shop.com,Kim,EU,gold
+lee@shop.com,Lee,NA,silver
+amy2@shop.com,Amy,NA,bronze
+ned@shop.net,Ned,EU,gold
+opal@shop.com,Opal,APAC,silver
