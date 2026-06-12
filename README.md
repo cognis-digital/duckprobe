@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-duckprobe
+pip install "git+https://github.com/cognis-digital/duckprobe.git"
 duckprobe scan .            # → prioritized findings in seconds
 ```
 
@@ -48,7 +48,7 @@ DuckDB-era zero-setup DQ, hot
 ## Quick start
 
 ```bash
-pip install cognis-duckprobe
+pip install "git+https://github.com/cognis-digital/duckprobe.git"
 duckprobe --version
 duckprobe scan .                       # scan current project
 duckprobe scan . --format json         # machine-readable

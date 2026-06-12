@@ -21,7 +21,6 @@ if ROOT not in sys.path:
 from duckprobe import (  # noqa: E402
     TOOL_NAME,
     TOOL_VERSION,
-    EvalContext,
     bundled_customers_csv,
     bundled_dataset_csv,
     bundled_report,
