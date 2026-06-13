@@ -20,6 +20,36 @@ pip install cognis-duckprobe
 duckprobe scan .            # → prioritized findings in seconds
 ```
 
+
+## Usage — step by step
+
+1. Install (Python 3.9+):
+   ```bash
+   pip install duckprobe
+   ```
+2. Run data-quality checks on a file (CSV / Parquet / JSON) using a checks
+   suite or inline checks:
+   ```bash
+   duckprobe check data.csv --checks suite.yml
+   duckprobe check data.csv -c "row_count > 0" -c "not_null id [warn]"
+   ```
+3. Explore the data first: profile columns, auto-suggest a starter suite, or
+   list the bundled checks:
+   ```bash
+   duckprobe profile data.csv
+   duckprobe suggest data.csv
+   duckprobe rules
+   ```
+4. Read the output: the report prints PASS/FAIL with per-check outcomes and an
+   error/warning count. Add `--format json` for tooling, or `--format junit`
+   for CI. Exit codes: `0` no error failures, `1` one or more error failures,
+   `2` usage/IO error. Use `--no-duckdb` to force the stdlib CSV engine.
+5. Wire it into CI (JUnit) or track metric anomalies over time:
+   ```bash
+   duckprobe check data.csv --checks suite.yml --format junit > dq-results.xml
+   duckprobe check data.csv --checks suite.yml --metric-store hist.json
+   ```
+
 ## Contents
 
 - [Why duckprobe?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
