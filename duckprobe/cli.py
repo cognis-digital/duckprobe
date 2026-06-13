@@ -85,6 +85,17 @@ def _gather_checks(args) -> str:
     return text
 
 
+_FORMAT_CHOICES = ("table", "json", "junit")
+
+
+def _add_format(parser: argparse.ArgumentParser) -> None:
+    """Add --format to a subparser so it can appear after the subcommand."""
+    parser.add_argument(
+        "--format", choices=_FORMAT_CHOICES, default="table",
+        help="output format (default: table)",
+    )
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog=TOOL_NAME,
@@ -92,40 +103,72 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p.add_argument("--version", action="version",
                    version=f"{TOOL_NAME} {TOOL_VERSION}")
-    p.add_argument("--format", choices=("table", "json", "junit"), default="table",
+    # --format is also accepted globally (before the subcommand) for convenience.
+    p.add_argument("--format", choices=_FORMAT_CHOICES, default="table",
                    help="output format (default: table)")
     sub = p.add_subparsers(dest="command", required=True)
 
-    chk = sub.add_parser("check", help="run data-quality checks on a file")
-    chk.add_argument("data", help="path to CSV / Parquet / JSON data file")
-    chk.add_argument("--checks", help="path to a checks file (DSL, one per line)")
-    chk.add_argument("-c", "--check", action="append", default=[],
-                     dest="inline_checks", metavar="CHECK",
-                     help="inline check (repeatable)")
-    chk.add_argument("--metric-store", metavar="JSON",
-                     help="JSON metric-history file; enables anomaly checks and is "
-                          "updated with this run's metrics")
-    chk.add_argument("--no-duckdb", action="store_true",
-                     help="force the stdlib CSV engine even if duckdb is installed")
+    # "checks" is accepted as an alias for "check" (plural form).
+    for name in ("check", "checks"):
+        chk = sub.add_parser(name, help="run data-quality checks on a file")
+        chk.add_argument("data", help="path to CSV / Parquet / JSON data file")
+        chk.add_argument("--checks", help="path to a checks file (DSL, one per line)")
+        chk.add_argument("-c", "--check", action="append", default=[],
+                         dest="inline_checks", metavar="CHECK",
+                         help="inline check (repeatable)")
+        chk.add_argument("--metric-store", metavar="JSON",
+                         help="JSON metric-history file; enables anomaly checks and is "
+                              "updated with this run's metrics")
+        chk.add_argument("--no-duckdb", action="store_true",
+                         help="force the stdlib CSV engine even if duckdb is installed")
+        _add_format(chk)
 
     sc = sub.add_parser("scan", help="run the bundled suite against the bundled datasets")
     sc.add_argument("--no-duckdb", action="store_true")
+    _add_format(sc)
 
     pr = sub.add_parser("profile", help="per-column profile of a file")
     pr.add_argument("data", help="path to data file")
     pr.add_argument("--no-duckdb", action="store_true")
+    _add_format(pr)
 
     sg = sub.add_parser("suggest", help="auto-generate a starter check suite")
     sg.add_argument("data", help="path to data file")
     sg.add_argument("--no-duckdb", action="store_true")
+    _add_format(sg)
 
-    sub.add_parser("rules", help="list the bundled suite checks")
+    rl = sub.add_parser("rules", help="list the bundled suite checks")
+    _add_format(rl)
     return p
+
+
+def _extract_format(argv: Optional[List[str]]) -> Optional[str]:
+    """Scan argv for --format VALUE and return the value, or None if not found.
+
+    This lets --format work both before and after the subcommand name.
+    """
+    if argv is None:
+        import sys as _sys
+        argv = _sys.argv[1:]
+    it = iter(argv)
+    for tok in it:
+        if tok == "--format":
+            try:
+                return next(it)
+            except StopIteration:
+                break
+        if tok.startswith("--format="):
+            return tok.split("=", 1)[1]
+    return None
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     args = build_parser().parse_args(argv)
-    fmt = args.format
+    # If --format was specified explicitly anywhere in argv (before or after the
+    # subcommand), honour it.  The subparser default can shadow the global parser
+    # value when the flag appears before the subcommand, so we resolve it here.
+    explicit_fmt = _extract_format(argv)
+    fmt = explicit_fmt if explicit_fmt is not None else args.format
     prefer_duckdb = not getattr(args, "no_duckdb", False)
 
     try:
@@ -169,12 +212,17 @@ def main(argv: Optional[List[str]] = None) -> int:
                 print(suite)
             return 0
 
-        # command == "check"
+        # command == "check" or "checks" (plural alias)
         check_text = _gather_checks(args)
         if not check_text.strip():
-            print("error: no checks provided (use --checks FILE or -c CHECK)",
-                  file=sys.stderr)
-            return 2
+            if args.command == "checks":
+                # "checks" with no explicit checks: auto-suggest and run
+                table, _ = load_table(args.data, prefer_duckdb=prefer_duckdb)
+                check_text = suggest_checks(table)
+            else:
+                print("error: no checks provided (use --checks FILE or -c CHECK)",
+                      file=sys.stderr)
+                return 2
         report = probe(args.data, check_text, prefer_duckdb=prefer_duckdb,
                        metric_store=getattr(args, "metric_store", None))
         _emit_report(report, fmt)

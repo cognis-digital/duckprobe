@@ -20,6 +20,12 @@ pip install "git+https://github.com/cognis-digital/duckprobe.git"
 duckprobe scan .            # → prioritized findings in seconds
 ```
 
+<!-- cognis:layman:start -->
+## What is this?
+
+duckprobe is a command-line tool that checks whether your data files are clean and meet the rules you expect. You point it at a CSV, Parquet, or JSON file and tell it things like "this column should never be empty" or "all values here must be positive numbers," and it tells you which rules pass and which fail. It works on your laptop with no account, no cloud service, and no complex setup — just install it and run it. It is built for analysts, engineers, and anyone who needs to quickly validate data before using it in a report, pipeline, or machine learning project.
+<!-- cognis:layman:end -->
+
 ## Contents
 
 - [Why duckprobe?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
@@ -45,6 +51,42 @@ DuckDB-era zero-setup DQ, hot
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="quick-start"></a>
+<!-- cognis:install:start -->
+## Install
+
+`duckprobe` is source-available (not published to PyPI) — every method below installs
+straight from GitHub. Pick whichever you prefer; the one-line scripts auto-detect
+the best tool available on your machine.
+
+**One-liner (Linux / macOS):**
+```sh
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/duckprobe/HEAD/install.sh | sh
+```
+
+**One-liner (Windows PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/cognis-digital/duckprobe/HEAD/install.ps1 | iex
+```
+
+**Or install manually — any one of:**
+```sh
+pipx install "git+https://github.com/cognis-digital/duckprobe.git"     # isolated (recommended)
+uv tool install "git+https://github.com/cognis-digital/duckprobe.git"  # uv
+pip install "git+https://github.com/cognis-digital/duckprobe.git"      # pip
+```
+
+**From source:**
+```sh
+git clone https://github.com/cognis-digital/duckprobe.git
+cd duckprobe && pip install .
+```
+
+Then run:
+```sh
+duckprobe --help
+```
+<!-- cognis:install:end -->
+
 ## Quick start
 
 ```bash
