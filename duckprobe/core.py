@@ -263,7 +263,17 @@ def _read_csv_text(text: str) -> Table:
         header = next(reader)
     except StopIteration:
         return Table(columns=[], data={}, row_count=0)
-    cols = [h.strip() for h in header]
+    raw_cols = [h.strip() for h in header]
+    # Deduplicate column names: e.g. id, id -> id, id_2
+    seen_cols: Dict[str, int] = {}
+    cols: List[str] = []
+    for h in raw_cols:
+        if h in seen_cols:
+            seen_cols[h] += 1
+            cols.append(f"{h}_{seen_cols[h]}")
+        else:
+            seen_cols[h] = 1
+            cols.append(h)
     data: Dict[str, List[Any]] = {c: [] for c in cols}
     n = 0
     for row in reader:
@@ -877,11 +887,17 @@ def load_metric_store(path: str) -> Dict[str, float]:
 
 def save_metric_store(path: str, metrics: Dict[str, float]) -> None:
     import json
+    import warnings
     payload = {"tool": TOOL_NAME, "version": TOOL_VERSION,
                "updated_at": _now().isoformat(timespec="seconds"),
                "metrics": metrics}
-    with open(path, "w", encoding="utf-8") as fh:
-        json.dump(payload, fh, indent=2)
+    try:
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(payload, fh, indent=2)
+    except OSError as exc:
+        warnings.warn(
+            f"duckprobe: could not write metric store {path!r}: {exc}",
+            RuntimeWarning, stacklevel=2)
 
 
 def run_checks(table: Table, checks: List[Check],
@@ -1028,27 +1044,17 @@ def bundled_suite() -> str:
     )
 
 
-def _materialize_customers() -> str:
-    """Write the bundled customers master to a temp file and return its path.
-
-    Lets the bundled suite exercise the referential-integrity check without a
-    pre-existing file on disk.
-    """
-    import tempfile
-    d = tempfile.mkdtemp(prefix="duckprobe_")
-    p = os.path.join(d, "customers.csv")
-    with open(p, "w", encoding="utf-8") as fh:
-        fh.write(bundled_customers_csv())
-    return p
-
-
 def bundled_report(prefer_duckdb: bool = False) -> ProbeReport:
     """Run the bundled suite against the bundled dataset entirely in memory."""
+    import tempfile
     table = load_csv_text(bundled_dataset_csv())
-    cust_path = _materialize_customers()
-    suite = bundled_suite() + f"\nreference customer_id in {cust_path}:id\n"
-    ctx = EvalContext(base_dir=os.path.dirname(cust_path))
-    results = run_checks(table, parse_checks(suite), ctx)
+    with tempfile.TemporaryDirectory(prefix="duckprobe_") as d:
+        cust_path = os.path.join(d, "customers.csv")
+        with open(cust_path, "w", encoding="utf-8") as fh:
+            fh.write(bundled_customers_csv())
+        suite = bundled_suite() + f"\nreference customer_id in {cust_path}:id\n"
+        ctx = EvalContext(base_dir=d)
+        results = run_checks(table, parse_checks(suite), ctx)
     return ProbeReport("<bundled:orders>", "stdlib-csv", table.row_count,
                        results, dict(ctx.recorded))
 

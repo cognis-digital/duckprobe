@@ -228,8 +228,12 @@ def main(argv: Optional[List[str]] = None) -> int:
         _emit_report(report, fmt)
         return 0 if report.passed else 1
 
-    except (OSError, ValueError, KeyError) as e:
+    except (OSError, ValueError, KeyError, UnicodeDecodeError) as e:
         print(f"error: {e}", file=sys.stderr)
+        return 2
+    except Exception as e:  # noqa: BLE001
+        # Catch-all for unexpected errors (csv.Error, MemoryError, etc.)
+        print(f"error: {type(e).__name__}: {e}", file=sys.stderr)
         return 2
 
 
