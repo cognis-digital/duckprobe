@@ -34,3 +34,6 @@ duckprobe = "duckprobe.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["duckprobe"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
