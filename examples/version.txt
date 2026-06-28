@@ -1,0 +1,3 @@
+$ duckprobe-emit --version
+
+duckprobe 0.3.0

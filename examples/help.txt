@@ -1,0 +1,20 @@
+$ duckprobe-emit --help
+
+usage: duckprobe [-h] [--version] [--format {table,json,junit}]
+                 {check,scan,profile,suggest,rules} ...
+
+Soda-Core-style data-quality checks on any file. Zero install.
+
+positional arguments:
+  {check,scan,profile,suggest,rules}
+    check               run data-quality checks on a file
+    scan                run the bundled suite against the bundled datasets
+    profile             per-column profile of a file
+    suggest             auto-generate a starter check suite
+    rules               list the bundled suite checks
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json,junit}
+                        output format (default: table)

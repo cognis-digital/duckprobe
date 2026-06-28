@@ -21,6 +21,62 @@ duckprobe scan .            # → prioritized findings in seconds
 ```
 
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ duckprobe-emit --version
+duckprobe 0.3.0
+```
+
+```console
+$ duckprobe-emit --help
+usage: duckprobe [-h] [--version] [--format {table,json,junit}]
+                 {check,scan,profile,suggest,rules} ...
+
+Soda-Core-style data-quality checks on any file. Zero install.
+
+positional arguments:
+  {check,scan,profile,suggest,rules}
+    check               run data-quality checks on a file
+    scan                run the bundled suite against the bundled datasets
+    profile             per-column profile of a file
+    suggest             auto-generate a starter check suite
+    rules               list the bundled suite checks
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json,junit}
+                        output format (default: table)
+```
+
+```console
+$ duckprobe-emit rules
+[error] schema customer_id, email, status, age, balance
+[error] row_count between 1 and 1000000
+[error] not_null customer_id
+[error] unique customer_id
+[error] duplicate_percent customer_id < 1
+[warn ] completeness email >= 95 [warn]
+[error] not_null email
+[error] matches_regex email ^[^@\s]+@[^@\s]+\.[^@\s]+$
+[error] accepted_values status in active, churned, trial
+[error] in_range age between 0 and 120
+[error] min balance >= 0
+[warn ] avg age between 18 and 90 [warn]
+[warn ] percentile balance p90 < 100000 [warn]
+[error] group_by country row_count >= 1
+[warn ] avg balance < 5000 where status = active [warn]
+```
+
+> Blocks above are real `duckprobe` output — reproduce them from a clone.
+
+<!-- cognis:example:end -->
+
 ## Usage — step by step
 
 1. Install (Python 3.9+):
